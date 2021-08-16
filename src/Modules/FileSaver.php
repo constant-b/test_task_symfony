@@ -16,7 +16,7 @@ class FileSaver
 
     public function __construct(string $targetDirectory, SluggerInterface $slugger)
     {
-        $this->targetDirectory = $targetDirectory;
+        $this->targetDirectory = $targetDirectory . date("Y") . "/" . date("m") . "/";
         $this->slugger         = $slugger;
     }
 
