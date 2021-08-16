@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Modules\FileSaver;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,10 +24,20 @@ class ApiController extends AbstractController
                 /** @var $file UploadedFile */
                 $file = $request->files->get($key);
 
-                if ($file) $fileSaver->save($file);
+                if ($file) {
+                    try {
+
+                        $fileSaver->save($file);
+                    } catch (FileException $exception) {
+                        return $this->json(['success' => false]);
+                    }
+                }
 
                 return $this->json(['success' => true]);
+
             }
         }
+
+        return $this->json(['success' => false]);
     }
 }

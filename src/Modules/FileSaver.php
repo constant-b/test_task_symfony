@@ -20,7 +20,7 @@ class FileSaver
         $this->slugger         = $slugger;
     }
 
-    public function isAllowedExtension(string $extension): bool
+    public function isAllowedExtension(?string $extension): bool
     {
         return in_array(mb_strtolower($extension), self::ALLOWED_EXTENSIONS);
     }
